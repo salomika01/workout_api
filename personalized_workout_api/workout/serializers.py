@@ -7,22 +7,22 @@ from .models import WorkoutPlan, Exercise, WorkoutPlanExercise, Progress
 class WorkoutPlanSerializer(serializers.ModelSerializer):
     class Meta:
         model = WorkoutPlan
-        fields = ['id', 'user', 'frequency', 'goals', 'session_duration']
+        fields = ['id', 'user', 'title', 'description', 'created_at']
 
 class ExerciseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Exercise
-        fields = ['id', 'name', 'description', 'instructions', 'target_muscles']
+        fields = ['id', 'name', 'description', 'created_at']
 
 class WorkoutPlanExerciseSerializer(serializers.ModelSerializer):
     class Meta:
         model = WorkoutPlanExercise
-        fields = ['id', 'workout_plan', 'exercise', 'sets', 'repetitions', 'duration', 'distance']
+        fields = ['id', 'workout_plan', 'exercise', 'sets', 'repetitions', 'notes']
 
 class ProgressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Progress
-        fields = ['id', 'user', 'date', 'exercise', 'repetitions', 'sets', 'duration', 'distance']
+        fields = ['id', 'user', 'date', 'workout_plan', 'completed',]
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
