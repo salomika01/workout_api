@@ -4,9 +4,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
-from .forms import UserRegistrationForm, UserLoginForm
+from .serializers import UserRegistrationSerializer, UserLoginSerializer
 from django.contrib.auth import logout
-from .forms import WorkoutPlanForm
+from .serializers import WorkoutPlanSerializer
 from .models import WorkoutPlan
 from rest_framework.permissions import IsAuthenticated
 
@@ -20,7 +20,7 @@ class MyProtectedAPIView(APIView):
 
 class UserRegistrationAPIView(APIView):
     def post(self, request):
-        form = UserRegistrationForm(request.data)
+        form = UserRegistrationSerializer(request.data)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
@@ -31,7 +31,7 @@ class UserRegistrationAPIView(APIView):
 
 class UserLoginAPIView(APIView):
     def post(self, request):
-        form = UserLoginForm(request.data)
+        form = UserLoginSerializer(request.data)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
@@ -57,7 +57,7 @@ class WorkoutPlanListCreateAPIView(APIView):
         return Response(data)
 
     def post(self, request):
-        form = WorkoutPlanForm(request.data)
+        form = WorkoutPlanSerializer(request.data)
         if form.is_valid():
             form.save()
             return Response({'message': 'Workout plan created successfully'}, status=status.HTTP_201_CREATED)
@@ -77,7 +77,7 @@ class WorkoutPlanDetailAPIView(APIView):
 
     def put(self, request, pk):
         workout_plan = self.get_object(pk)
-        form = WorkoutPlanForm(request.data, instance=workout_plan)
+        form = WorkoutPlanSerializer(request.data, instance=workout_plan)
         if form.is_valid():
             form.save()
             return Response({'message': 'Workout plan updated successfully'})
