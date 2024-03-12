@@ -12,7 +12,7 @@ class WorkoutPlanSerializer(serializers.ModelSerializer):
 class ExerciseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Exercise
-        fields = ['id', 'name', 'description', 'created_at']
+        fields = ['id', 'name', 'description', 'created_at', 'target_muscles']
 
 class WorkoutPlanExerciseSerializer(serializers.ModelSerializer):
     class Meta:
